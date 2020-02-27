@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js实现老虎机游戏</title>
+</head>
+<style>
+    table{
+        margin-left:400px;
+       /* border-collapse: collapse;*/
+        border:1px solid #999;
+        float: left;
+    }
+    table td{
+        width:40px;
+        height:40px;
+        text-align: center;
+        background: #ffffff;
+        border: 5px solid #eee;
+        padding: 5px;
+        font-family: "微软雅黑";
+        font-style: normal;
+        font-weight:bolder;
+
+        font-size: 24px;
+        color: red;
+
+    }
+   /* table td:first-child{
+        border: 5px solid red;
+    }*/
+    table td img{
+        width: 100%;
+        height: 100%;;
+    }
+    .go{
+       display: block;
+
+       background: orange;
+       color: #ffffff;
+       font-family: "Times New Roman", Times, serif;
+       font-size: 1em;
+       text-align: center;
+       margin: 10px auto;
+       width: 150px;
+       height:150px;
+       line-height: 150px;
+       border-radius: 50%;
+       text-decoration: none;
+       font-family: "Times New Roman", Times, serif;
+       font-weight: bold;
+       font-style: normal;
+       font-size: 40px;;
+   }
+    .go:active{
+        border:3px solid #999999;
+    }
+    #div1{
+        width: 420px;
+        height: 440px;
+        border: 1px dashed #0eff45;
+        float: left;
+    }
+    span{
+        display: inline-block;
+    }
+    .title{
+        display: inline-block;
+        width: 130px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        border-bottom: 1px solid red;
+        font-weight: bold;
+    }
+    span.main{
+        width: 130px;
+        height: 40px;
+        text-align: center;
+        line-height: 30px;
+        border-bottom: 1px solid #06581f;
+    }
+    .colorR{
+        color: red;
+        font-weight: bold;
+    }
+    span input{
+        margin: 5px 0px;
+        width: 100%;
+        height: 90%;
+    }
+    .p1{
+        margin-top: 30px;
+        margin-left: 10px;
+    }
+    .p1 span{
+        color: #FF0000;
+        margin-right: 5px;
+        font-size: 1em;
+        font-weight: bold;
+    }
+    .p2{
+        color: #999;
+        font-size: 0.75em;
+        margin-top: 25px;
+        margin-left: 10px;
+    }
+    .yazhu{
+        display: block;
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        background: #0eff45;
+        color: #ffffff;
+        text-decoration: none;
+        margin: 10px auto;
+    }
+    .yazhu:active{
+        border: 3px solid #cccccc;
+    }
+</style>
+<body>
+    <script>
+        /**
+         * 1:苹果 2：苹果梨 3：橘子 4：瓜子 5：杏仁 6：南瓜 7：花生
+         * 8：香蕉
+         * @type {*[]}
+         */
+        //搭建地图数组 数据结构
+        var tiger =[
+                [1,1,1,2,3,3,3],
+                [1,0,0,0,0,0,4],
+                [4,0,0,0,0,0,4],
+                [6,0,0,0,0,0,4],
+                [5,0,0,0,0,0,6],
+                [4,0,0,0,0,0,7],
+                [1,1,2,1,7,7,8]
+        ];
+    
+        //搭建 表格地图函数
+         function tabArr(arr){
+             var oTab =document.createElement("table");
+             oTab.setAttribute("border","1");
+             oTab.setAttribute("id","tab");
+             for(var i =0;i<arr.length;i++){
+                 var atr =document.createElement("tr");
+                 oTab.appendChild(atr);
+                 for(var j =0;j<arr[i].length;j++){
+                     var atd1 =oTab.getElementsByTagName("tr")[i];
+                     var atd = document.createElement("td");
+                 atd1.appendChild(atd);
+
+                 if(arr[i][j]==1) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/pinguo.jpg)';
+                 }
+                 else if(arr[i][j]==2) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/pl.jpg)';
+                 }
+                 else if(arr[i][j]==3) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/juzi.jpg)';
+                 }
+                 else if(arr[i][j]==4) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/guazi.jpg)';
+                 }
+                 else if(arr[i][j]==5) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/xingren.jpg)';
+                 }
+                 else if(arr[i][j]==6) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/nangua.png)';
+                 }
+                 else if(arr[i][j]==7) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/huasheng.jpg)';
+                 }
+                 else if(arr[i][j]==8) {
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = '' +
+                             '![](../img/xiangjiao.jpg)';
+                 }
+                 else if(arr[i][j]==0){
+                     oTab.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].innerHTML = ' ';
+                 }
+             }
+         }
+         document.body.appendChild(oTab);
+          oTab.getElementsByTagName("tr")[2].getElementsByTagName("td")[2].innerHTML='中';
+          oTab.getElementsByTagName("tr")[2].getElementsByTagName("td")[4].innerHTML='奖';
+          oTab.getElementsByTagName("tr")[4].getElementsByTagName("td")[2].innerHTML='水';
+          oTab.getElementsByTagName("tr")[4].getElementsByTagName("td")[4].innerHTML='果';
+     }
+    tabArr(tiger);
+    //alert(document.getElementsByTagName("td").length);
+    //搭建 环形跑道数组
+    function huaXing(){
+        //这个函数，有待提升复用性
+      var num =-1;
+      var hArr =[];
+        for(var i=0;i<1000;i++){
+            if(num<6){
+                num++;
+                hArr.push(num);
+            }
+            else if(num>=6&&num<48){
+                num+=7;
+                hArr.push(num);
+            }
+        }
+         //console.log(num) ==48 很好，我想要的数值
+         for(var j =1000;j>0;j--){
+            if(num<49&&num>42){
+                num--;
+                hArr.push(num);
+
+            }
+            if(j<=42){
+                j-=6;
+                hArr.push(j-1);
+            }
+        }
+        return hArr;
+    }
+    var paodao =huaXing();
+    //初始化 跑道第一个格子
+   var MyTd = document.getElementsByTagName("td");
+              MyTd[0].style.border='5px solid red';
+    //alert(paodao.length)
+    //跑马灯跑道函数
+    var timeId =null; // 定时器变量
+    var iSpeed =50; //定时器时间
+    function paomaFun(){
+        var xunhuan=0;    //记录当前跑到哪里了
+        var num =0;       // 跑多少次，第一轮定时器停止
+        var MaNum =0;     //第二次定时器停止初始值
+        var MathTg =Math.floor((Math.random()*20)*5);
+        alert(MathTg)
+       // var MathRodom =Math.floor(Math.random()*10); //将要停止。。
+        clearInterval(timeId);
+            timeId=setInterval(function(){
+                xunhuan++;
+                num++;
+                for(var i =0;i<MyTd.length;i++){
+                    MyTd[i].style.border='';
+                }
+                MyTd[paodao[xunhuan]].style.border='5px solid red';
+                if(xunhuan==paodao.length-1){
+                    xunhuan=0;
+                }
+                 if(num==MathTg){
+                     clearInterval(timeId);
+                     iSpeed+=100;
+                     clearInterval(t);
+                     var t =setInterval(function(){
+                          MaNum++;
+                         xunhuan++;
+                          for(var i =0;i<MyTd.length;i++) {
+                              MyTd[i].style.border = '';
+                          }
+                          MyTd[paodao[xunhuan]].style.border='5px solid red';
+                         if(xunhuan==paodao.length-1){
+                              xunhuan=0;
+                         }
+                         if(MaNum==10){
+                             clearInterval(t);
+                             //当跑完了，计算一个，当前被选中td 在双数组中的索引值
+                             tdIndex(tiger)
+                             iSpeed=50;
+                         }
+                     },iSpeed);
+                 }
+            },iSpeed);
+    }
+      // 统计所有赌注金额
+      function yazhu(){
+        var oDiv =document.getElementById("div1");
+        var aInput =oDiv.getElementsByTagName("input");
+        var totalSpan =document.getElementById("totalSpan").innerHTML;
+        var str=0;
+        for(var i =0;i<aInput.length;i++){
+            str+=parseInt(aInput[i].value);
+        }
+        //alert(totalSpan)
+        if(parseInt(totalSpan)>str&&str!=0){
+            var str1 =parseInt(totalSpan)-str
+            document.getElementById("totalSpan").innerHTML=str1;
+            document.getElementById("chaqian").innerHTML='';
+        }else if(str==0){
+            document.getElementById("chaqian").innerHTML='请输入您的赌注！';
+        }else{
+            document.getElementById("chaqian").innerHTML='余额不足！';
+        }
+    }
+    //老虎机停止，查看当前td的索引
+    function tdIndex(arr){
+        var oTab= document.getElementById("tab");
+        var aTr =oTab.getElementsByTagName("tr");
+        var totalSpans=document.getElementById("totalSpan").innerHTML;
+        var aIpt =document.getElementById("div1").getElementsByTagName("input");
+        var ijImg;
+        oTab.getElementsByTagName("tr")[3].getElementsByTagName("td")[3].style.border='5px solid yellow';
+        var pasIntTot =parseInt(totalSpans);
+        for(var i =0;i<aTr.length;i++){
+            var aTd =aTr[i].getElementsByTagName("td");
+            for(var j =0;j<aTd.length;j++){
+                if(aTd[j].style.border=='5px solid red'){
+                    //alert(arr[i][j]); =====这里判断一下，
+                    if(arr[i][j]==1){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=parseInt(aIpt[4].value);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                        //alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==2){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=(parseInt(aIpt[2].value)*3);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                        //alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==3){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=parseInt(aIpt[4].value);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                       // alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==4){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=parseInt(aIpt[4].value);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                       // alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==5){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=(parseInt(aIpt[3].value)*4);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                          // alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==6){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=(parseInt(aIpt[1].value)*3);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                        // alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==7){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=parseInt(aIpt[4].value);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                        // alert(pasIntTot)
+                    }
+                    else if(arr[i][j]==8){
+                        ijImg=aTd[j].innerHTML;
+                        aTr[3].getElementsByTagName("td")[3].innerHTML=ijImg;
+                        pasIntTot+=(parseInt(aIpt[0].value)*5);
+                        document.getElementById("totalSpan").innerHTML=pasIntTot;
+                        // alert(pasIntTot)
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+<div id="div1">
+    <span class="title">水果</span>
+    <span class="title">赌注</span>
+    <span class="title">赔率</span>
+    <span class="main">香蕉</span>
+    <span class="main"><input type="text" value="0" /></span>
+    <span class="main colorR">5倍</span>
+    <span class="main">南瓜</span>
+    <span class="main"><input type="text" value="0"/></span>
+    <span class="main colorR">3倍</span>
+    <span class="main">苹果+梨</span>
+    <span class="main"><input type="text" value="0"/></span>
+    <span class="main colorR">3倍</span>
+    <span class="main">杏仁</span>
+    <span class="main"><input type="text" value="0"/></span>
+    <span class="main colorR">4倍</span>
+    <span class="main">其他水果</span>
+    <span class="main"><input type="text" value="0"/></span>
+    <span class="main colorR">1倍</span>
+    <p class="p1">您当前金额为：<span id="totalSpan">100000</span>$   
+      <span id="chaqian"></span>
+    </p>
+    <p class="p2">注意事项：点击压注 ===> 开始摇杆 </p>
+    <a href="javascript:yazhu();" class="yazhu">压注！</a>
+</div>
+<div style="clear: both"></div>
+<a href="javascript:paomaFun();" class="go">摇杆</a>
+</body>
+</html>

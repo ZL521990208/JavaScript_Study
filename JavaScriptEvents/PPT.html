@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="pre()">上一张</button>
+    <img
+      id="slider"
+      src="1.jpg"
+    />
+    <button onclick="next()">下一张</button>
+    <script>
+      var imgs = [
+        'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg',
+        'http://a4.att.hudong.com/21/09/01200000026352136359091694357.jpg',
+        'http://a2.att.hudong.com/36/48/19300001357258133412489354717.jpg',
+        'http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg'
+    ]
+      
+      var num = 0
+      function next() {
+        var slider = document.getElementById('slider')
+        num++
+        if (num >= imgs.length) {
+          num = 0
+        }
+        slider.src = imgs[num]
+      }
+      function pre() {
+        var slider = document.getElementById('slider')
+        num--
+        if (num < 0) {
+          num = imgs.length - 1
+        }
+        slider.src = imgs[num]
+      }
+    </script>
+  </body>
+</html>
