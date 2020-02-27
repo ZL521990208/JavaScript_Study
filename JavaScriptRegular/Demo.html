@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>表单验证</title>
+    <script>
+        function isVaildInfo(){
+            var emailReg=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            var telReg=/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+            var pwdReg=/^[a-zA-Z0-9]{6,18}$/;
+
+            var email=document.getElementById("email").value;
+            var tel=document.getElementById("tel").value;
+            var pwd=document.getElementById("pwd").value;
+
+            if (emailReg.test(email)&&telReg.test(tel)&&pwdReg.test(pwd)) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    <form action="555.html" method="get" >
+        <input id="email" type="text" name="" placeholder="请输入邮箱">
+        <input id="tel" type="text" name=""  placeholder="请输入手机号">
+        <input id="pwd" type="password" name=""  placeholder="请输入密码">
+        <input type="submit" value="确定" id="btn" onclick="return isVaildInfo()">
+
+    </form>
+
+</body>
+</html>
